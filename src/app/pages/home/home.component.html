@@ -1,0 +1,25 @@
+<div class="search">
+  <input
+    #searchField
+    class="search-field"
+    [style.border-color]="errorMessage ? 'red' : 'initial'"
+    (change)="onSearchFieldChange(searchField.value)" />
+
+  <div *ngIf="errorMessage" class="error" >{{ errorMessage }}</div>
+</div>
+
+<div class="grid-container">
+  <ng-container *ngIf="users$ | async as users">
+    <ng-container *ngIf="users.length; else noDataTemplate">
+      <a *ngFor="let user of users" class="user" [routerLink]="'/repos/' + user.login">
+        <img class="user-img" [src]="user.avatar_url" [alt]="user.login">
+
+        <span class="user-login">
+          {{ user.login }}
+        </span>
+      </a>
+    </ng-container>
+
+    <ng-template #noDataTemplate>No data...</ng-template>
+  </ng-container>
+</div>

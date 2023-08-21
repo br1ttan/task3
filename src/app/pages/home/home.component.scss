@@ -50,3 +50,23 @@
 .error {
   color: red;
 }
+
+.columns-container {
+  display: flex;
+  width: 100%;
+}
+
+.column {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ccc;
+
+  ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin: 5px 0;
+      }
+  }
+}

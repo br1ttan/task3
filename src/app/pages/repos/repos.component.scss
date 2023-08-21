@@ -1,17 +1,14 @@
 .user {
-  margin-top: 20px;
-  border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
+
+  &-description {
+    color: #c4c1c1;
+  }
 
   &-info {
     display: flex;
     flex-direction: column;
-
-    .heading {
-      font-size: 1.5rem;
-      margin: 0;
-    }
   }
 }
 
@@ -40,4 +37,9 @@
 .modal-footer {
   background-color: #333;
   border-top: none;
+}
+
+.heading {
+  font-size: 1.5rem;
+  margin: 0;
 }

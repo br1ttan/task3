@@ -11,6 +11,7 @@ import { Subject, takeUntil, Observable, of } from 'rxjs';
 export class HomeComponent implements OnInit, OnDestroy {
   public users$: Observable<IUser[] | null> = of([]);
   public errorMessage: string | null = null;
+  public isColumns = true;
   private readonly subject$ = new Subject<void>();
   private searchFieldValue = '';
 
@@ -24,8 +25,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-      this.subject$.next();
-      this.subject$.complete();
+    this.subject$.next();
+    this.subject$.complete();
+  }
+
+  public onToggleColumns(): void {
+    this.isColumns = !this.isColumns;
   }
 
   public onSearchFieldChange(value: string): void {
@@ -37,16 +42,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.usersService.getUsersByUsername(value)
       .pipe(takeUntil(this.subject$))
       .subscribe({
-        next: (data) => {
-          this.users$ = of(data);
-
-          this.changeDetector.detectChanges();
-        },
-        error: (error) => {
-          this.errorMessage = `Error: ${error.message}`;
-
-          this.changeDetector.detectChanges();
-        },
+        next: (data) => this.users$ = of(data),
+        error: (error) => this.errorMessage = `Error: ${error.message}`,
+        complete: () => this.changeDetector.detectChanges()
     });
   }
 }

@@ -24,7 +24,7 @@ export class ReposComponent {
     private readonly usersService: UsersService,
   ) { }
 
-  public onModalOpen(content: TemplateRef<any>, data: IRepos) {
+  public onModalOpenClick(content: TemplateRef<any>, data: IRepos): void {
 		this.reposData = data;
 
     this.modalService.open(content);

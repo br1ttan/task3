@@ -8,18 +8,52 @@
   <div *ngIf="errorMessage" class="error" >{{ errorMessage }}</div>
 </div>
 
-<div class="grid-container">
-  <ng-container *ngIf="users$ | async as users">
-    <ng-container *ngIf="users.length; else noDataTemplate">
-      <a *ngFor="let user of users" class="user" [routerLink]="'/repos/' + user.login">
-        <img class="user-img" [src]="user.avatar_url" [alt]="user.login">
+<button (click)="onToggleColumns()">Toggle columns</button>
 
-        <span class="user-login">
-          {{ user.login }}
-        </span>
-      </a>
-    </ng-container>
+<ng-container *ngIf="users$ | async as users">
+  <ng-container *ngIf="isColumns; else notColumnsTemplate">
+    <div class="columns-container">
+      <div class="column">
+          <ul>
+              <li *ngFor="let user of users.slice(0, users.length / 2)">
+                <a class="user" [routerLink]="'/repos/' + user.login">
+                  <img class="user-img" [src]="user.avatar_url" [alt]="user.login">
 
-    <ng-template #noDataTemplate>No data...</ng-template>
+                  <span class="user-login">
+                    {{ user.login }}
+                  </span>
+                </a>
+              </li>
+          </ul>
+      </div>
+      <div class="column">
+          <ul>
+            <li *ngFor="let user of users.slice(users.length / 2)">
+              <a class="user" [routerLink]="'/repos/' + user.login">
+                <img class="user-img" [src]="user.avatar_url" [alt]="user.login">
+
+                <span class="user-login">
+                  {{ user.login }}
+                </span>
+              </a>
+            </li>
+          </ul>
+      </div>
+  </div>
   </ng-container>
-</div>
+  <ng-template #notColumnsTemplate>
+    <div class="grid-container">
+      <ng-container *ngIf="users.length; else noDataTemplate">
+        <a *ngFor="let user of users" class="user" [routerLink]="'/repos/' + user.login">
+          <img class="user-img" [src]="user.avatar_url" [alt]="user.login">
+
+          <span class="user-login">
+            {{ user.login }}
+          </span>
+        </a>
+      </ng-container>
+
+      <ng-template #noDataTemplate>No data...</ng-template>
+    </div>
+  </ng-template>
+</ng-container>
